@@ -1,25 +1,24 @@
-import logo from './logo.svg';
+import firebase from './firebase/firebase-config'
 import './App.css';
+import { useEffect } from 'react';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+  useEffect(() => {
+   const msg = firebase.messaging();
+   msg.requestPermission().then(()=>{
+     return msg.getToken();
+   }).then((data)=>{
+     console.warn('token', data)
+   })
+  }, [])
+
+  return <div className='App'>
+      <h1>
+          Prueba #1 de push notification
+      </h1>
+      <button>Recibir push notification</button>
+    </div>;
+  }
+  export default App;
